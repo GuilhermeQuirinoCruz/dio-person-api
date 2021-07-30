@@ -41,6 +41,14 @@ public class PersonService {
         return personMapper.toDTO(person);
     }
 
+    public List<PersonDTO> findByFirstName(String name) {
+        List<Person> peopleWithGivenName = personRepository.findByName(name);
+
+        return peopleWithGivenName.stream()
+                .map(personMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     public void delete(Long id) throws PersonNotFoundException {
         verifyIfExists(id);
         personRepository.deleteById(id);
